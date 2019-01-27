@@ -1,26 +1,18 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flaskapp import User 
-
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///students.sqlite3"
-db = SQLAlchemy(app)
+from app import app 
+from flask import render_template
 
 @app.route('/')
-def home():
-	return render_template('home.html')
-
-@app.route('/about')
-def about():
-	return render_template('about.html')
-
-@app.route('/dbtest')
-def dbtest():
-	
-
-	db.create_all()
-	return render_template('db_test.html')
-
-if __name__ == '__main__':
-	app.run(debug=True)
+@app.route('/index')
+def index():
+	user = {'username':'Andreu'}
+	posts = [
+		{
+			'author': {'username': 'Andreu'},
+			'body': 'Post content, here goes what the author wrote'
+		},
+		{
+			'author': {'username': 'Marina'},
+			'body': 'Another post with different content'
+		}
+	]
+	return render_template('index.html', user=user, posts=posts)
